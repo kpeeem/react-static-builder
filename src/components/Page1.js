@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import style from '../styles/main.styl'
 
 export default class extends Component {
   constructor(){
@@ -16,7 +17,7 @@ export default class extends Component {
   }
 
   render() {
-    return <div>
+    return <div className={style.main}>
       Page 1
       <input type="number" value={this.state.value} onChange={e => this.changed(e)} />
     </div>   
