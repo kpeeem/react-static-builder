@@ -1,54 +1,101 @@
 const {resolve} = require('path');
 const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const ReactStaticPlugin = require('react-static-webpack-plugin');
+//const OfflinePlugin = require('offline-plugin');
 
-const DEV_PORT = process.env.DEV_PORT || 3000;
-const DEV_HOST = 'http://localhost:' + DEV_PORT + '/';
-const HMR_HOST = DEV_HOST + '__webpack_hmr';
+const isDev = process.env.NODE_ENV !== 'production';
+console.log('isDev?', isDev);
 
-module.exports = {
-    entry: {
-        app: [
-            'react-hot-loader/patch',
-            // activate HMR for React
-            'webpack-dev-server/client?http://localhost:3000',
-            // bundle the client for webpack-dev-server
-            // and connect to the provided endpoint
-            'webpack/hot/only-dev-server',
-            // bundle the client for hot reloading
+const getEntry = () => {
+    let entry = [];
+
+    if(isDev){
+        entry.push('react-hot-loader/patch',
+                   'webpack-dev-server/client?http://localhost:31337',
+                   'webpack/hot/only-dev-server');
             // only- means to only hot reload for successful updates
-            './index.js'
-            // the entry point of our app
-        ],
-    },
+    }
+    entry.push('./index.js');
+    // the entry point of our app
+    return entry
+};
+const getDevServer = () => {
+
+    if(isDev){
+        return {
+            hot: true,
+                // enable HMR on the server
+            host: 'localhost',
+            port: 31337,
+            contentBase: resolve(__dirname, 'dist'),
+            // match the output path
+            publicPath: '/',
+            // match the output `publicPath`
+            //fallback to root for other urls
+            historyApiFallback: true
+        }
+    }
+    return {}
+};
+const getPlugins = () => {
+    plugin = [];
+    if (isDev) {
+        plugin.push(
+            new webpack.HotModuleReplacementPlugin(),
+            new webpack.NamedModulesPlugin(),
+            new webpack.NoEmitOnErrorsPlugin()
+        )
+    } else {
+        plugin.push(
+            new ReactStaticPlugin({
+                template: './template.js',    // Path to JSX template file,
+                routes: './index.js',  // Path to routes file
+
+            })
+        );
+    }
+    plugin.unshift(
+        new webpack.DefinePlugin({
+            isDev: isDev,
+        }),
+        new ExtractTextPlugin({
+            filename: 'style.css',
+            disable: isDev,
+            allChunks: true,
+        }),
+        new webpack.LoaderOptionsPlugin({
+            minimize: true,
+            options: {
+                postcss: [autoprefixer({browsers: ['last 2 versions']})],
+                stylus: {
+                    use: [],
+                },
+            },
+        }),
+        //new OfflinePlugin(),
+        //new StaticSiteGeneratorPlugin('bundle.js', data.routes, data),
+    );
+    return plugin
+};
+module.exports = {
+    entry: getEntry(),
     output: {
-        filename: '[name].js',
+       filename: 'bundle.js',
         // the output bundle
         path: resolve(__dirname, 'dist'),
         libraryTarget: 'umd',
-        publicPath: '/'
-        // necessary for HMR to know where to load the hot update chunks
+        publicPath: '/',
     },
 
     context: resolve(__dirname, 'src'),
 
     devtool: 'inline-source-map',
-    resolve: {
-          extensions: ['.css', '.scss', '.js', '.jsx' ]
-    },
-    devServer: {
-        hot: true,
-        // enable HMR on the server
-        host: 'localhost',
-        port: 3000,
-        contentBase: resolve(__dirname, 'dist'),
-        // match the output path
-        publicPath: '/',
-        // match the output `publicPath`
-        //fallback to root for other urls
-        historyApiFallback: true,
-        // inline: true
-    },
+    // resolve: {
+    //       extensions: ['.css', '.scss', '.js', '.jsx' ]
+    // },
+    devServer: getDevServer(),
 
     module: {
         rules: [
@@ -61,35 +108,38 @@ module.exports = {
             },
             {
                 test: /\.styl$/,
-                use: [
-                    { loader: 'style-loader' },
-                    {
-                        loader: 'css-loader',
-                        options: {
-                            module: true,
-                            importLoaders: 2,
-                            localIdentName: '[name]__[local]__[hash:base64:5]',
+                use: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: [
+                        {
+                            loader: 'css-loader',
+                            query: {
+                                modules: true,
+                                importLoaders: 2,
+                                localIdentName: '[local]-[hash:base64:5]',
+                            },
                         },
-                    },
-                    { loader: 'postcss-loader' },
-                    {
-                        loader: 'stylus-loader',
-                    },
-                ],
+                        { loader: 'postcss-loader' },
+                        { loader: 'stylus-loader' },
+                    ],
+                }),
             },
             {
                 test: /\.css$/,
-                use: [
-                    {
-                        loader: 'css-loader',
-                        query: {
-                            modules: true,
-                            importLoaders: 2,
-                            localIdentName: '[local]-[hash:base64:5]',
+                use: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: [
+                        {
+                            loader: 'css-loader',
+                            query: {
+                                modules: true,
+                                importLoaders: 2,
+                                localIdentName: '[local]-[hash:base64:5]',
+                            },
                         },
-                    },
-                    {loader: 'postcss-loader'}
-                ],
+                        { loader: 'postcss-loader' }
+                    ],
+                }),
             },
             {
                 test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
@@ -114,18 +164,5 @@ module.exports = {
         ],
     },
 
-    plugins: [
-        new webpack.HotModuleReplacementPlugin(),
-        new webpack.NamedModulesPlugin(),
-        new webpack.LoaderOptionsPlugin({
-            minimize: true,
-            options: {
-                postcss: [autoprefixer({browsers: ['last 2 versions']})],
-                stylus: {
-                    use: [],
-                },
-            },
-        }),
-        
-    ],
+    plugins: getPlugins(),
 };

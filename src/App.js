@@ -9,8 +9,8 @@ export default class extends Component {
     render() {
         return <BrowserRouter>
             <div>
-                <span>App</span>
-                <Link to={'/page1'}>page1</Link>
+                <span>Application</span>
+                <Link to={'/page1'}>pageOne</Link>
                 <Link to={'/page2'}>page2</Link>
                 <Route path="/page1" component={Page1} />
                 <Route path="/page2" component={Page2} />
@@ -18,3 +18,4 @@ export default class extends Component {
         </BrowserRouter>
     }
 }
+
