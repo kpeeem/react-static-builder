@@ -1,0 +1,114 @@
+@import "./../../styles/fonts";
+
+aspectRatio = 1.41
+posterWidth = 600px
+posterHeight = posterWidth * aspectRatio
+
+zoomPerentage = 75%
+residue = 100% - zoomPerentage
+
+div
+  box-sizing border-box
+.wrapper
+  position relative
+  margin 0 auto
+  &:before,
+  &:after
+    position absolute
+    content ""
+    bottom: 15px
+    left 8px
+    width 50%
+    top 80%
+    max-width 300px
+    background #777
+    box-shadow 0 15px 10px rgba(#000,.5)
+    transform rotate(-3deg)
+  &:after
+    transform rotate(3deg)
+    right 8px
+    left auto
+
+.container
+  display table
+  width  posterWidth
+  height posterHeight
+  margin: 40px 0 auto;
+  background-color #ccc
+  position relative
+  box-shadow 0 1px 4px 2px rgba(#000,.2)
+  z-index 1
+
+.row
+  display table-row
+
+.item
+  //border 1px solid #ddd
+  transition width 0.2s ease-in-out, height 0.2s ease-in-out
+  display table-cell
+  width residue
+  height residue
+  cursor pointer
+  vertical-align top
+
+.item:hover
+  width zoomPerentage
+  height zoomPerentage
+
+
+.h1
+  font-family 'ProximaNova-Black'
+  margin: 0;
+  padding: 15px;
+  display: block;
+.h2
+  font-family 'ProximaNova-Regular'
+  margin: 0;
+
+.link
+  text-decoration none
+  color black
+
+
+.about
+  background-color #fa7579
+.work
+  background-color #ffff2d
+.where
+  background-color #57d6ff
+.blog
+  background-color 1px solid #ddd
+
+
+//work
+.workTitle
+  height 15%
+  background-color #888
+  padding 15px
+  display inline-flex
+  width 100%
+  align-items center
+  font-size 19px
+  .h2
+    color #f2f2f2
+.workSubTitle
+  height 15%
+  background-color #fff
+  padding 15px
+  display inline-flex
+  width 100%
+  align-items center
+  font-size 22px
+  .h2
+    color: #282828;
+.workBottom
+  height 70%
+  background-color transparent
+  padding: 15px
+  position relative
+  .h2
+    font-size 170px
+    display block
+    bottom 0
+    position absolute
+    right 10%

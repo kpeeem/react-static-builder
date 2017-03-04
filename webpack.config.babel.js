@@ -11,11 +11,11 @@ console.log('isDev?', isDev);
 const getEntry = () => {
     let entry = [];
 
-    if(isDev){
+    if (isDev) {
         entry.push('react-hot-loader/patch',
-                   'webpack-dev-server/client?http://localhost:31337',
-                   'webpack/hot/only-dev-server');
-            // only- means to only hot reload for successful updates
+            'webpack-dev-server/client?http://localhost:31337',
+            'webpack/hot/only-dev-server');
+        // only- means to only hot reload for successful updates
     }
     entry.push('./index.js');
     // the entry point of our app
@@ -23,11 +23,11 @@ const getEntry = () => {
 };
 const getDevServer = () => {
 
-    if(isDev){
+    if (isDev) {
         return {
             hot: true,
-                // enable HMR on the server
-            host: 'localhost',
+            // enable HMR on the server
+            host: '0.0.0.0',
             port: 31337,
             contentBase: resolve(__dirname, 'dist'),
             // match the output path
@@ -51,9 +51,17 @@ const getPlugins = () => {
         plugin.push(
             new ReactStaticPlugin({
                 template: './template.js',    // Path to JSX template file,
-                routes: './index.js',  // Path to routes file
+                routes: './routes.js',  // Path to routes file
 
-            })
+            }),
+            new webpack.optimize.UglifyJsPlugin({
+                comments: false,
+                sourceMap: true,
+                compress: {
+                    screw_ie8: true,
+                    warnings: false,
+                },
+            }),
         );
     }
     plugin.unshift(
@@ -73,6 +81,10 @@ const getPlugins = () => {
                     use: [],
                 },
             },
+            context: 'src',
+            output: {
+                path: 'dist'
+            }
         }),
         //new OfflinePlugin(),
         //new StaticSiteGeneratorPlugin('bundle.js', data.routes, data),
@@ -82,7 +94,7 @@ const getPlugins = () => {
 module.exports = {
     entry: getEntry(),
     output: {
-       filename: 'bundle.js',
+        filename: 'bundle.js',
         // the output bundle
         path: resolve(__dirname, 'dist'),
         libraryTarget: 'umd',
@@ -92,9 +104,10 @@ module.exports = {
     context: resolve(__dirname, 'src'),
 
     devtool: 'inline-source-map',
-    // resolve: {
-    //       extensions: ['.css', '.scss', '.js', '.jsx' ]
-    // },
+    resolve: {
+        modules: ['node_modules', 'src'],
+        extensions: ['.js', '.styl', '.css']
+    },
     devServer: getDevServer(),
 
     module: {
@@ -116,11 +129,14 @@ module.exports = {
                             query: {
                                 modules: true,
                                 importLoaders: 2,
-                                localIdentName: '[local]-[hash:base64:5]',
+                                context: 'src',
+                                localIdentName: '[name]_[local]__[hash:base64:5]',
                             },
                         },
-                        { loader: 'postcss-loader' },
-                        { loader: 'stylus-loader' },
+                        {loader: 'postcss-loader'},
+                        {loader: 'resolve-url-loader'},
+                        {loader: 'stylus-loader'},
+
                     ],
                 }),
             },
@@ -129,35 +145,47 @@ module.exports = {
                 use: ExtractTextPlugin.extract({
                     fallback: 'style-loader',
                     use: [
-                        {
-                            loader: 'css-loader',
-                            query: {
-                                modules: true,
-                                importLoaders: 2,
-                                localIdentName: '[local]-[hash:base64:5]',
-                            },
-                        },
-                        { loader: 'postcss-loader' }
+                        {loader: 'css-loader'},
+                        {loader: 'resolve-url-loader'},
+                        {loader: 'postcss-loader'},
+
                     ],
                 }),
             },
+            // {
+            //     test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+            //     use: [
+            //         {
+            //             loader: 'url-loader',
+            //             options: {limit: 10000, mimetype: 'mimetype=application/font-woff'},
+            //         },
+            //     ],
+            // },
+            // {
+            //     test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+            //     use: 'file-loader',
+            // },
+            // {
+            //     test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+            //     use: "base64-font-loader"
+            // },
+            // {
+            //     test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+            //     use: "file-loader"
+            // },
             {
-                test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                use: [
-                    {
-                        loader: 'url-loader',
-                        options: {limit: 10000, mimetype: 'mimetype=application/font-woff'},
-                    },
-                ],
-            },
-            {
-                test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                use: 'file-loader',
+                test: /\.(png|woff|woff2|eot|ttf|svg|otf)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                loader: 'url-loader'
             },
             {
                 test: /\.(png|jpg|gif|ico)$/,
                 use: [
-                    {loader: 'file-loader', options: {name: '[name].[ext]'}},
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name: '[name].[ext]'
+                        }
+                    },
                 ],
             }
 

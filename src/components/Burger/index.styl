@@ -1,0 +1,78 @@
+.main
+  position absolute
+  right 10px
+  top 0px
+  z-index 10
+  line-height 1.5
+
+.menu
+  margin 0 auto
+  width 600px
+  display flex
+  flex-direction column
+  align-items flex-start
+  padding-left 180px
+  justify-content space-around
+  height 100%
+  padding-bottom 100px
+  padding-top 100px
+  min-height 450px
+  max-height 600px
+
+.burger, .close
+  font-size 42px
+  cursor pointer
+  user-select none
+  animation-name bounceIn
+.close
+  font-size 42px
+  line-height 2
+.fade
+  position fixed
+  overflow hidden
+  height 100%
+  width 100%
+  opacity 0.95
+  background-color #000
+  left 0
+  top 0
+  z-index 1
+
+.link
+  font-family HelveticaNeueCyr-Medium
+  text-decoration none
+  color #fff
+  font-size 52px
+  line-height 1
+  display flex
+  transition color 0.8 ease-in-out
+
+.link:hover
+  color #f7fe00
+
+.burgerImage
+  border-style none
+  height 100vmin
+  margin 0 auto
+  width auto
+  text-align: center
+  display block
+
+@keyframes bounceIn{
+  0%{
+    opacity: 0;
+    transform: scale(0.3) translate3d(0,0,0);
+  }
+  50%{
+    opacity: 0.9;
+    transform: scale(1.1);
+  }
+  80%{
+    opacity: 1;
+    transform: scale(0.89);
+  }
+  100%{
+    opacity: 1;
+    transform: scale(1) translate3d(0,0,0);
+  }
+}
