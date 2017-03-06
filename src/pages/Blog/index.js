@@ -4,23 +4,16 @@ import style from './index.styl'
 export default class extends Component {
     constructor(){
         super();
-
-        this.state = {
-            value: 1
-        }
-    }
-
-    changed(event){
-        this.setState({
-            value: event.target.valueAsNumber
-        })
     }
 
     render() {
-        return <div className={style.main}>
-            Blog!
-            <input type="number" value={this.state.value} onChange={e => this.changed(e)} />
-        </div>
+        return(
+            <div className={style.main}>
+                <h2 className={style.slogan}>
+                    Таааакс... Тут должны быть записи
+                </h2>
+            </div>
+        )
     }
 }
 

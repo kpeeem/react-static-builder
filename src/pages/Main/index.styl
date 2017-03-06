@@ -9,9 +9,27 @@ residue = 100% - zoomPerentage
 
 div
   box-sizing border-box
+.h1,.h2
+  color #000
+  font-size 21px
+
+.h1
+  font-family 'ProximaNova-Black'
+  margin 0
+  padding 15px
+  display block
+.h2
+  font-family 'ProximaNova-Regular'
+  margin 0
+
 .wrapper
+  width posterWidth
   position relative
   margin 0 auto
+  padding-top 40px
+  animation-name: fadeInDown;
+  animation-duration: 1s;
+  animation-fill-mode: both;
   &:before,
   &:after
     position absolute
@@ -33,7 +51,7 @@ div
   display table
   width  posterWidth
   height posterHeight
-  margin: 40px 0 auto;
+  margin 0 auto
   background-color #ccc
   position relative
   box-shadow 0 1px 4px 2px rgba(#000,.2)
@@ -52,24 +70,19 @@ div
   vertical-align top
   overflow hidden
   position relative
+  .linkFrom
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    text-decoration none
 
 .item:hover
   width zoomPerentage
   height zoomPerentage
 
 
-.h1
-  font-family 'HelveticaNeueCyr-Heavy'
-  margin: 0;
-  padding: 15px;
-  display: block;
-.h2
-  font-family 'ProximaNova-Regular'
-  margin: 0;
 
-.link
-  text-decoration none
-  color black
 
 
 .about
@@ -79,17 +92,70 @@ div
   background-position: 85% 24%;
   background-repeat: no-repeat;
   font-size: 24px;
-  .link
-    color: #fff;
-    display: block;
-    position: absolute;
+  color #fff
+  .h1
+    color #fff
+    font-size: 45px;
+
 .work
   background-color #ffc749
+  background-image url('assets/img/reactLogo.svg')
+  background-size: cover;
+  background-position: right bottom;
+  background-repeat: no-repeat;
+
 .where
   background-color #57d6ff
-.blog
-  background-color 1px solid #ddd
+  background-image url('assets/img/socialNetwors.back.svg')
+  background-position -28px 19px
+  background-size cover
+  background-repeat no-repeat
+  &:hover
+    .h2
+      transform rotate(0deg)
+      top 0
+      left 0
+      right 0
+      margin 0
+  .h2
+    font-size 49px
+    position absolute
+    padding 15px
+    display block
+    width 100%
+    box-sizing: border-box
+    font-family HelveticaNeueCyr-Heavy
+    color #fff
+    transform rotate(-45deg)
+    top 5px
+    left 49px
+    transition transform 0.2s ease-in-out, top 0.2s ease-in-out, left 0.2s ease-in-out
 
+.blog
+  background-color #f8f8f8
+  .circle
+    width 130px
+    height 130px
+    border-radius 100%
+    background-color rgba(231, 32, 255, 0.47)
+    position absolute
+    left 0
+    right 0
+    margin auto
+    top 0%
+  for n in (1..10)
+    .circle:nth-child({n})
+      background-color rgba(spin(#0000ff, n*20'deg'), 0.47)
+      top n*12+'%'
+  .h2
+    font-size 59px
+    position absolute
+    padding 15px
+    text-align center
+    display block
+    width 100%
+    box-sizing border-box
+    font-family 'HelveticaNeueCyr-Heavy'
 
 //work
 .workTitle
@@ -102,6 +168,7 @@ div
   font-size 16px
   position: absolute
   top 0
+  min-height 50px
   .h2
     color #f2f2f2
 .workSubTitle
@@ -114,6 +181,7 @@ div
   font-size 22px
   top 15%
   position: absolute
+  min-height 50px
   .h2
     color: #282828;
 .workBottom
@@ -123,6 +191,23 @@ div
   position: absolute
   right 0
   bottom 0
-  font-size 100px
   .h2
+    font-size 150px
     display block
+
+@keyframes spin {
+  from {transform:rotate(0deg);}
+  to {transform:rotate(360deg);}
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -5%, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}

@@ -4,23 +4,16 @@ import style from './index.styl'
 export default class extends Component {
     constructor(){
         super();
-
-        this.state = {
-            value: 1
-        }
-    }
-
-    changed(event){
-        this.setState({
-            value: event.target.valueAsNumber
-        })
     }
 
     render() {
-        return <div className={style.main}>
-            Where!
-            <input type="number" value={this.state.value} onChange={e => this.changed(e)} />
-        </div>
+        return(
+            <div className={style.main}>
+                <h2 className={style.slogan}>
+                    <a className={style.link} href="http://github.com/kpeeem">GitHub</a>
+                </h2>
+            </div>
+        )
     }
 }
 

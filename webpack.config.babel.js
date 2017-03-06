@@ -11,17 +11,21 @@ const isDev = process.env.NODE_ENV !== 'production';
 console.log('isDev?', isDev);
 
 const getEntry = () => {
-    let entry = [];
+    const hotloader = [
+        'react-hot-loader/patch',
+        'webpack-dev-server/client?http://localhost:31337',
+        'webpack/hot/only-dev-server',
+        './index.js'
+    ];
 
-    if (isDev) {
-        entry.push('react-hot-loader/patch',
-            'webpack-dev-server/client?http://localhost:31337',
-            'webpack/hot/only-dev-server');
-        // only- means to only hot reload for successful updates
+    return {
+        app: isDev ? hotloader : ['./index.js'],
+        // about: ["pages/About"],
+        // blog:  ["pages/Blog"],
+        // main:  ["pages/Main"],
+        // where: ["pages/Where"],
+        // work:  ["pages/Work"],
     }
-    entry.push('./index.js');
-    // the entry point of our app
-    return entry
 };
 const getDevServer = () => {
 
@@ -65,10 +69,9 @@ const getPlugins = () => {
                 },
             }),
             new CopyWebpackPlugin([
-                { from: 'assets/img/favicons' },
+                {from: 'assets/img/favicons'},
             ])
-
-        );
+        )
     }
     plugin.unshift(
         new CleanWebpackPlugin(['dist'], {
@@ -78,6 +81,7 @@ const getPlugins = () => {
             exclude: ['index.html']
         }),
         new webpack.DefinePlugin({
+            'NODE_ENV': isDev ? JSON.stringify('development') : JSON.stringify('production'),
             isDev: isDev,
         }),
         new ExtractTextPlugin({
@@ -97,7 +101,13 @@ const getPlugins = () => {
             output: {
                 path: 'dist'
             }
-        })
+        }),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: "app",
+            filename: 'app.js',
+            // children: true,
+            minChunks: 2
+        }),
         //new OfflinePlugin(),
     );
     return plugin
@@ -105,10 +115,11 @@ const getPlugins = () => {
 module.exports = {
     entry: getEntry(),
     output: {
-        filename: 'bundle.js',
+        filename: "[name].js",
+        chunkFilename: "[id].js",
         // the output bundle
         path: resolve(__dirname, 'dist'),
-        libraryTarget: 'umd',
+        // libraryTarget: 'umd',
         publicPath: '/',
     },
 
@@ -141,7 +152,7 @@ module.exports = {
                                 modules: true,
                                 importLoaders: 2,
                                 context: 'src',
-                                localIdentName: '[name]_[local]__[hash:base64:5]',
+                                localIdentName: '[name]_[folder]_[local]__[hash:base64:5]',
                             },
                         },
                         {loader: 'postcss-loader'},
@@ -203,6 +214,17 @@ module.exports = {
                         loader: 'file-loader',
                         options: {
                             name: 'assets/fonts/[name].[ext]'
+                        }
+                    },
+                ],
+            },
+            {
+                test: /\.(docx|doc|pdf|pages)$/,
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name: 'assets/docs/[name].[ext]'
                         }
                     },
                 ],

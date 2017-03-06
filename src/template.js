@@ -3,7 +3,7 @@ const T = React.PropTypes;
 
 const Html = ({
     title = 'Application',
-    bundle = 'bundle.js',
+    bundle = 'app.js',
     body = '',
     favicon = 'favicon.ico',
     stylesheet = 'style.css',
@@ -12,7 +12,7 @@ const Html = ({
     <head>
         <meta charSet='utf-8'/>
         <meta httpEquiv='X-UA-Compatible' content='IE=edge'/>
-        <meta name='viewport' content='width=device-width, initial-scale=1'/>
+        <meta name='viewport' content='width=800, initial-scale=1'/>
         <title>{title}</title>
 
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>
@@ -26,7 +26,7 @@ const Html = ({
 
         {stylesheet ? <link rel='stylesheet' href={stylesheet}/> : null}
     </head>
-    <body>
+    <body style="display:none">
     <div id='root' dangerouslySetInnerHTML={{__html: body}}/>
     <script src={bundle}/>
     </body>

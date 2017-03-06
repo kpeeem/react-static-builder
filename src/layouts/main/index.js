@@ -5,9 +5,9 @@ import About  from 'pages/About';
 import Work   from 'pages/Work';
 import Blog   from 'pages/Blog';
 import Where  from 'pages/Where';
-import Burger   from 'components/Burger';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
+import { connect } from 'react-redux';
 
 import style from './index.styl'
 export default class extends Component {
@@ -22,7 +22,6 @@ export default class extends Component {
                     <Route path="/work" component={Work} />
                     <Route path="/blog" component={Blog} />
                     <Route path="/where" component={Where} />
-                    <Burger />
                 </section>
                 {/*<Footer />*/}
             </div>

@@ -14,8 +14,8 @@ class Header extends Component {
                 <Link className={style.link} to={'/'}>Main</Link>
                 <Link className={style.link} to={'/about'}>About</Link>
                 <Link className={style.link} to={'/work'}>Do</Link>
-                <Link className={style.link} to={'/blog'}>Links</Link>
                 <Link className={style.link} to={'/where'}>Where</Link>
+                <Link className={style.link} to={'/blog'}>log</Link>
             </ul>
         )
     }
