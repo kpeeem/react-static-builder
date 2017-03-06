@@ -58,7 +58,7 @@ class main extends Component {
                                 <h2 className={style.h2}>Заметки</h2>
                                 <div>
                                     {
-                                        [...Array(7).keys()].map(i =>  <div className={style.circle} />)
+                                        [...Array(7).keys()].map(i =>  <div key={i} className={style.circle} />)
                                     }
                                 </div>
                             </Link>
