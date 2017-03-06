@@ -3,6 +3,8 @@ const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ReactStaticPlugin = require('react-static-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 //const OfflinePlugin = require('offline-plugin');
 
 const isDev = process.env.NODE_ENV !== 'production';
@@ -62,9 +64,19 @@ const getPlugins = () => {
                     warnings: false,
                 },
             }),
+            new CopyWebpackPlugin([
+                { from: 'assets/img/favicons' },
+            ])
+
         );
     }
     plugin.unshift(
+        new CleanWebpackPlugin(['dist'], {
+            root: resolve(__dirname),
+            verbose: true,
+            dry: false,
+            exclude: ['index.html']
+        }),
         new webpack.DefinePlugin({
             isDev: isDev,
         }),
@@ -85,9 +97,8 @@ const getPlugins = () => {
             output: {
                 path: 'dist'
             }
-        }),
+        })
         //new OfflinePlugin(),
-        //new StaticSiteGeneratorPlugin('bundle.js', data.routes, data),
     );
     return plugin
 };
@@ -169,21 +180,29 @@ module.exports = {
             //     test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
             //     use: "base64-font-loader"
             // },
+
             // {
-            //     test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-            //     use: "file-loader"
+            //     test: /\.(png|woff|woff2|eot|ttf|svg|otf)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+            //     loader: 'url-loader'
             // },
             {
-                test: /\.(png|woff|woff2|eot|ttf|svg|otf)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                loader: 'url-loader'
-            },
-            {
-                test: /\.(png|jpg|gif|ico)$/,
+                test: /\.(jpg|jpeg|gif|ico|png)$/,
                 use: [
                     {
                         loader: 'file-loader',
                         options: {
-                            name: '[name].[ext]'
+                            name: 'assets/images/[name].[ext]'
+                        }
+                    },
+                ],
+            },
+            {
+                test: /\.(woff|woff2|eot|ttf|svg|otf)$/,
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name: 'assets/fonts/[name].[ext]'
                         }
                     },
                 ],

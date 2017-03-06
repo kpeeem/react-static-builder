@@ -50,6 +50,8 @@ div
   height residue
   cursor pointer
   vertical-align top
+  overflow hidden
+  position relative
 
 .item:hover
   width zoomPerentage
@@ -57,7 +59,7 @@ div
 
 
 .h1
-  font-family 'ProximaNova-Black'
+  font-family 'HelveticaNeueCyr-Heavy'
   margin: 0;
   padding: 15px;
   display: block;
@@ -72,8 +74,17 @@ div
 
 .about
   background-color #fa7579
+  background-image url('assets/img/halftone-me.png');
+  background-size: 740px;
+  background-position: 85% 24%;
+  background-repeat: no-repeat;
+  font-size: 24px;
+  .link
+    color: #fff;
+    display: block;
+    position: absolute;
 .work
-  background-color #ffff2d
+  background-color #ffc749
 .where
   background-color #57d6ff
 .blog
@@ -88,7 +99,9 @@ div
   display inline-flex
   width 100%
   align-items center
-  font-size 19px
+  font-size 16px
+  position: absolute
+  top 0
   .h2
     color #f2f2f2
 .workSubTitle
@@ -99,16 +112,17 @@ div
   width 100%
   align-items center
   font-size 22px
+  top 15%
+  position: absolute
   .h2
     color: #282828;
 .workBottom
-  height 70%
+  height 190px
   background-color transparent
   padding: 15px
-  position relative
+  position: absolute
+  right 0
+  bottom 0
+  font-size 100px
   .h2
-    font-size 170px
     display block
-    bottom 0
-    position absolute
-    right 10%

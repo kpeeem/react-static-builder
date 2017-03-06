@@ -14,10 +14,10 @@ export const routes = (
     <Route path='/' title='App' component={App}>
         <IndexRoute title='App' component={Main} />
         <Route exact path="/" component={Main} />
-        <Route path="/about" component={About} />
-        <Route path="/work" component={Work} />
-        <Route path="/blog" component={Blog} />
-        <Route path="/where" component={Where} />
+        <Route path="/about/" component={About} />
+        <Route path="/work/" component={Work} />
+        <Route path="/blog/" component={Blog} />
+        <Route path="/where/" component={Where} />
         <Route path='*' title='404: Not Found' component={NotFound} />
     </Route>
 );
