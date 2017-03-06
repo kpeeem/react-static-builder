@@ -1,0 +1,36 @@
+@font-face {
+    font-family: 'Taylor Sans';
+    src: local('Taylor Sans Thin Italic'), local('TaylorSans-ThinItalic'), url('Taylorsansthinitalic.woff2') format('woff2'), url('Taylorsansthinitalic.woff') format('woff'), url('Taylorsansthinitalic.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Taylor Sans';
+    src: local('Taylor Sans Light'), local('TaylorSans-Light'), url('Taylorsanslight.woff2') format('woff2'), url('Taylorsanslight.woff') format('woff'), url('Taylorsanslight.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Taylor Sans';
+    src: local('Taylor Sans'), local('TaylorSans'), url('Taylorsans.woff2') format('woff2'), url('Taylorsans.woff') format('woff'), url('Taylorsans.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Taylor Sans';
+    src: local('Taylor Sans Semi Bold Italic'), local('TaylorSans-SemiBoldItalic'), url('Taylorsanssemibolditalic.woff2') format('woff2'), url('Taylorsanssemibolditalic.woff') format('woff'), url('Taylorsanssemibolditalic.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Taylor Sans';
+    src: local('Taylor Sans Bold'), local('TaylorSans-Bold'), url('Taylorsansbold.woff2') format('woff2'), url('Taylorsansbold.woff') format('woff'), url('Taylorsansbold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Taylor Sans';
+    src: local('Taylor Sans Extra Bold'), local('TaylorSans-ExtraBold'), url('Taylorsansextrabold.woff2') format('woff2'), url('Taylorsansextrabold.woff') format('woff'), url('Taylorsansextrabold.ttf') format('truetype');
+    font-weight: 800;
+    font-style: normal;
+}

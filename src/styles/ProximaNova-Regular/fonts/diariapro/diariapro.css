@@ -1,0 +1,12 @@
+@font-face {
+    font-family: 'Diaria Pro';
+    src: local('Diaria Pro Medium'), local('DiariaPro-Medium'), url('Diariapromedium.woff2') format('woff2'), url('Diariapromedium.woff') format('woff'), url('Diariapromedium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Diaria Pro';
+    src: local('Diaria Pro Medium Italic'), local('DiariaPro-MediumItalic'), url('Diariapromediumitalic.woff2') format('woff2'), url('Diariapromediumitalic.woff') format('woff'), url('Diariapromediumitalic.ttf') format('truetype');
+    font-weight: 500;
+    font-style: italic;
+}

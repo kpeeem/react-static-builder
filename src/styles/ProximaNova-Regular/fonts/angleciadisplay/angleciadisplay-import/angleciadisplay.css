@@ -1,0 +1,12 @@
+@font-face {
+    font-family: 'Anglecia Pro Dsp';
+    src: local('Anglecia Pro Display Italic'), local('AngleciaProDisplay-Italic'), url('http://64424.selcdn.com/webfonts/angleciadisplay/400i.woff2') format('woff2'), url('http://64424.selcdn.com/webfonts/angleciadisplay/400i.woff') format('woff');
+    font-weight: 400;
+    font-style: italic;
+}
+@font-face {
+    font-family: 'Anglecia Pro Dsp';
+    src: local('Anglecia Pro Display Regular'), local('AngleciaProDisplay-Regular'), url('http://64424.selcdn.com/webfonts/angleciadisplay/400.woff2') format('woff2'), url('http://64424.selcdn.com/webfonts/angleciadisplay/400.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
